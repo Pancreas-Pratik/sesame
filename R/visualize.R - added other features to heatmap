@@ -36,9 +36,12 @@
 #' @export
 visualizeRegion <- function(chrm, beg, end, betas, platform = NULL,
     genome = NULL, draw = TRUE, cluster.samples = FALSE,
-    na.rm = FALSE, nprobes.max = 1000, txn.types = "protein_coding",
-    txn.font.size = 6, ...) {
-
+    na.rm = FALSE, nprobes.max = 1000, txn.types = NULL,
+    font.size.scaling.factor = 0.5, ...) {
+  
+  font.size.scaling.factor = font.size.scaling.factor
+  txn.font.size = as.numeric(8*font.size.scaling.factor)
+  
     if (is.null(dim(betas))) { betas <- as.matrix(betas) }
     platform <- sesameData_check_platform(platform, rownames(betas))
     genome <- sesameData_check_genome(genome, platform)
@@ -64,15 +67,15 @@ visualizeRegion <- function(chrm, beg, end, betas, platform = NULL,
     plt.txns <- plotTranscripts(txns, reg, beg, end,
         txn.types = txn.types, txn.font.size = txn.font.size)
     plt.mapLines <- plotMapLines(probes, beg, end)
-    plt.cytoband <- plotCytoBand(chrm, beg, end, genomeInfo)
+    plt.cytoband <- plotCytoBand(chrm, beg, end, genomeInfo, txn.font.size)
+    plt.loci_txn_intersectionLines <- plotLociTxnIntersectionLines(probes, beg, end, txns)
     
     ## clustering
     betas <- betas[names(probes),,drop=FALSE]
     if (cluster.samples) {
         betas <- column.cluster(betas[names(probes),,drop=FALSE])$mat }
 
-    if (draw) { assemble_plots(betas, txns, probes,
-        plt.txns, plt.mapLines, plt.cytoband, ...)
+    if (draw) { assemble_plots(betas, txns, probes, plt.txns, plt.mapLines, plt.cytoband, plt.loci_txn_intersectionLines, font.size.scaling.factor, ...)
     } else { return(betas); }
 }
 
