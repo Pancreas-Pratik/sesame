@@ -290,7 +290,7 @@ assemble_plots <- function(
   
   if (is.null(show.samples.n)) { show.samples.n <- ncol(betas); }
   if (is.null(heat.height) && length(txns) > 0) {
-    heat.height <- 10 / length(txns); }
+    heat.height <- 15 / length(txns); }
   w <- WGrob(plt.txns, name = 'txn')
   w <- w + WGrob(plt.mapLines, name = 'mpl', Beneath(pad=0, height=mapLine.height))
   w <- w + WGrob(plt.loci_txn_intersectionLines, TopOf('mpl'))
