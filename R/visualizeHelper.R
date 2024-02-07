@@ -243,6 +243,7 @@ rename_probes_to_loci_and_de_duplicate_if_needed <- function(probes.list.or.beta
 #' @return a grid object
 assemble_plots <- function(
     betas, txns, probes, plt.txns, plt.mapLines, plt.cytoband, plt.loci_txn_intersectionLines, font.size.scaling.factor,
+    platform, genome,
     heat.height = NULL, 
     show.probeNames = TRUE, show.samples.n = NULL, hypothesis_generation = TRUE,
     show.sampleNames = TRUE, sample.name.fontsize = 10,
@@ -252,7 +253,7 @@ assemble_plots <- function(
   #it will show loci, instead of probes, genomic regulatory features, and cpg island
   if (hypothesis_generation) {
     #START - Addition by Pratik - bring in regulatory features from mft
-    mft <- sesameDataGet('MM285.mm39.manifest')
+    mft <- sesameDataGet(paste0(platform, ".", genome, ".manifest"))
     probe.list <- data.frame(mft[which(names(mft) %in% rownames(betas))])
     rownames(probe.list) <- probe.list$probeID
     probe.list <- probe.list[row.names(betas),]
