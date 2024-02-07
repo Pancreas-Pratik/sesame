@@ -75,7 +75,7 @@ visualizeRegion <- function(chrm, beg, end, betas, platform = NULL,
     if (cluster.samples) {
         betas <- column.cluster(betas[names(probes),,drop=FALSE])$mat }
 
-    if (draw) { assemble_plots(betas, txns, probes, plt.txns, plt.mapLines, plt.cytoband, plt.loci_txn_intersectionLines, font.size.scaling.factor, ...)
+    if (draw) { assemble_plots(betas, txns, probes, plt.txns, plt.mapLines, plt.cytoband, plt.loci_txn_intersectionLines, font.size.scaling.factor, platform, genome, ...)
     } else { return(betas); }
 }
 
